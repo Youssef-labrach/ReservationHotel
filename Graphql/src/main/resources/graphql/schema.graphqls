@@ -1,0 +1,46 @@
+type Query {
+    chambres: [Chambre]
+    reservations: [Reservation]
+    utilisateurs: [Utilisateur]
+}
+
+type Chambre {
+    id: ID!
+    type: String
+    prix: Float
+    disponible: Boolean
+    reservations: [Reservation]
+}
+
+
+
+type Utilisateur {
+    id: ID!
+    nomUtilisateur: String
+    motDePasse: String
+    role: Role
+    reservations: [Reservation]
+}
+
+type ReservationId {
+    utilisateurId: ID
+    chambreId: ID
+}
+
+enum Role {
+    ADMIN
+    USER
+}
+type Reservation {
+    id: ReservationId
+    utilisateur: Utilisateur
+    chambre: Chambre
+    dateDebut: String
+    dateFin: String
+    preferences: String
+}
+type Mutation {
+    createChambre(type: String!, prix: Float!, disponible: Boolean!): Chambre
+    createReservation(utilisateurId: ID!, chambreId: ID!, dateDebut: String!, dateFin: String!, preferences: String): Reservation
+    createUtilisateur(nomUtilisateur: String!, motDePasse: String!, role: Role!): Utilisateur
+}
